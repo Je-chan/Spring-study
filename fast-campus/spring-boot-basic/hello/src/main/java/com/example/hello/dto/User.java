@@ -1,5 +1,11 @@
 package com.example.hello.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+// 아래의 코드를 사용하면 앞으로 Null 값은 받지 않겠다는 의미다.
+// 즉, 이 클래스를 리턴해줄 때, Null 값이 있는 key 값은 빼서 주는 것
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
     private String name;
     private int age;
