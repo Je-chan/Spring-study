@@ -1,5 +1,7 @@
 package com.example.aop.controller;
 
+import com.example.aop.annotation.Decode;
+import com.example.aop.annotation.Timer;
 import com.example.aop.dto.User;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,5 +23,22 @@ public class RestApiController {
     public User post(@RequestBody User user) {
 
         return user;
+    }
+
+    @Decode
+    @PutMapping("/put")
+    public User put(@RequestBody User user) {
+        System.out.println("put");
+        System.out.println("user");
+
+        return user;
+    }
+
+    @Timer
+    @DeleteMapping("/delete")
+    public void delete() throws InterruptedException {
+
+        // DB Logic -> 1~2 초 정도 걸린다고 가정해서 작성하기
+        Thread.sleep(1000 * 2);
     }
 }

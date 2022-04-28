@@ -37,9 +37,9 @@ public class ParameterAop {
 
         // 메소드의 이름은 JoinPoint 에서 가져올 수 있다
         for(Object obj: args) {
-            System.out.println("Type : " + obj.getClass().getSimpleName());
-            System.out.println("Value : " + obj);
+             System.out.println("Value : " + obj);
         }
+
     }
 
     // cut() 메소드가 실행되는 지점, 그 리턴 값이 나올 때 afterReturn 메소드를 실행
