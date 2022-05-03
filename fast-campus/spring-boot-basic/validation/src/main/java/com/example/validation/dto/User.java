@@ -1,23 +1,28 @@
 package com.example.validation.dto;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class User {
-
+    
     @NotBlank
     private String name;
     private int age;
     // Valid 에 Email 이 존재
     @Email
     private String email;
-
     // Pattern 이라는 어노테이션으로 정규표현식을 사용한 Validation 이 가능하다.
     // message 는 에러메세지
-    @Pattern(regexp = "^\\d{2,3}-\\d{3,4}-\\d{4}\$", message="핸드폰 번호의 양식과 맞지 않습니다. xxx-xxx(x)-xxxx")
+    @Pattern(regexp = "^\\d{2,3}-\\d{3,4}-\\d{4}$", message="핸드폰 번호의 양식과 맞지 않습니다. xxx-xxx(x)-xxxx")
     private String phoneNumber;
 
+    @Size(min = 6, max=6) // 원하는 형태는 YYYYMM. Size 만으로는 우리가 원하는 형태만을 얻을 수 없다. (111101 이면 안 된다)
+    // 우리가 원하는 형태가 맞는지를 확인하기 위해서 따로 메소드를 만들어 낸다.
+    private String reqYearMonth;
+
+
+    // Getter And Setter
     public String getName() {
         return name;
     }
@@ -50,6 +55,26 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getReqYearMonth() {
+        return reqYearMonth;
+    }
+
+    public void setReqYearMonth(String reqYearMonth) {
+        this.reqYearMonth = reqYearMonth;
+    }
+
+    @AssertTrue(message = "yyyyMM의 형식에 맞지 않습니다")
+    // boolean 이 리턴 타입일 때는 메소드명 앞에 is 가 있어야 한다.
+    public boolean isReqYearMonthValidation () {
+        try {
+            LocalDate localDate = LocalDate.parse(getReqYearMonth()+"01", DateTimeFormatter.ofPattern("yyyyMMdd"));
+        } catch(Exception e) {
+            return false;
+        }
+
+        return true;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -57,6 +82,7 @@ public class User {
                 ", age=" + age +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
+                ", reqYearMonth='" + reqYearMonth + '\'' +
                 '}';
     }
 }
