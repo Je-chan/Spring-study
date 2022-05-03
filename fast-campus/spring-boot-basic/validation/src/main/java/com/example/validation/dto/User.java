@@ -1,5 +1,7 @@
 package com.example.validation.dto;
 
+import com.example.validation.annotation.YearMonth;
+
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -17,8 +19,11 @@ public class User {
     @Pattern(regexp = "^\\d{2,3}-\\d{3,4}-\\d{4}$", message="핸드폰 번호의 양식과 맞지 않습니다. xxx-xxx(x)-xxxx")
     private String phoneNumber;
 
-    @Size(min = 6, max=6) // 원하는 형태는 YYYYMM. Size 만으로는 우리가 원하는 형태만을 얻을 수 없다. (111101 이면 안 된다)
+//    @Size(min = 6, max=6) // 원하는 형태는 YYYYMM. Size 만으로는 우리가 원하는 형태만을 얻을 수 없다. (111101 이면 안 된다)
     // 우리가 원하는 형태가 맞는지를 확인하기 위해서 따로 메소드를 만들어 낸다.
+    // 다른 방법으로 새로운 어노테이션을 만드는 것
+
+    @YearMonth
     private String reqYearMonth;
 
 
@@ -63,17 +68,20 @@ public class User {
         this.reqYearMonth = reqYearMonth;
     }
 
-    @AssertTrue(message = "yyyyMM의 형식에 맞지 않습니다")
-    // boolean 이 리턴 타입일 때는 메소드명 앞에 is 가 있어야 한다.
-    public boolean isReqYearMonthValidation () {
-        try {
-            LocalDate localDate = LocalDate.parse(getReqYearMonth()+"01", DateTimeFormatter.ofPattern("yyyyMMdd"));
-        } catch(Exception e) {
-            return false;
-        }
 
-        return true;
-    }
+//    YearMonthVAlidator 를 만들어서 더 이상 사용할 필요가 없어짐
+//    AssrtTrue 를 사용하면 User 에서만 사용하기 때문에 범용성이 낮은 것
+//    @AssertTrue(message = "yyyyMM의 형식에 맞지 않습니다")
+//    // boolean 이 리턴 타입일 때는 메소드명 앞에 is 가 있어야 한다.
+//    public boolean isReqYearMonthValidation () {
+//        try {
+//            LocalDate localDate = LocalDate.parse(getReqYearMonth()+"01", DateTimeFormatter.ofPattern("yyyyMMdd"));
+//        } catch(Exception e) {
+//            return false;
+//        }
+//
+//        return true;
+//    }
 
     @Override
     public String toString() {
