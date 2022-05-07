@@ -1,14 +1,17 @@
 package com.example.exception.advice;
 
-import org.apache.coyote.Response;
+import com.example.exception.controller.ApiController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice
-public class GlobalControllerAdvice {
+//@RestControllerAdvice
+// 위에 주석처리 된 방식은 글로벌로 처리하는 방식. 밑의 코드는 특정 클래스에만 적용하는 방식
+// 이제 더이상 Global 하지 않기 때문에 폴더 이름도 ApiControllerAdvice 로 바꿈
+@RestControllerAdvice(basePackageClasses = ApiController.class)
+public class ApiControllerAdvice {
 
     // Exception 이 일어나는, 전체적인 예외, 스프링 웹 어플리케이션에서 발생하는 에러 모두 잡겠다는 것을 의미함
     @ExceptionHandler(value = Exception.class)
