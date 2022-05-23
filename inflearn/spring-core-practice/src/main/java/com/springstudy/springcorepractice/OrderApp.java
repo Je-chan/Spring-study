@@ -3,16 +3,20 @@ package com.springstudy.springcorepractice;
 import com.springstudy.springcorepractice.member.Grade;
 import com.springstudy.springcorepractice.member.Member;
 import com.springstudy.springcorepractice.member.MemberService;
-import com.springstudy.springcorepractice.member.MemberServiceImpl;
+import com.springstudy.springcorepractice.order.AppConfig;
 import com.springstudy.springcorepractice.order.Order;
 import com.springstudy.springcorepractice.order.OrderService;
-import com.springstudy.springcorepractice.order.OrderServiceImpl;
 
 public class OrderApp {
 
     public static void main(String[] args) {
-        MemberService memberService = new MemberServiceImpl();
-        OrderService orderService = new OrderServiceImpl();
+//        MemberService memberService = new MemberServiceImpl();
+//        OrderService orderService = new OrderServiceImpl();
+
+        AppConfig appConfig = new AppConfig();
+
+        MemberService memberService = appConfig.memberService();
+        OrderService orderService = appConfig.orderService();
 
         Long memberId = 1L;
         Member member = new Member(memberId, "memberA", Grade.VIP);
