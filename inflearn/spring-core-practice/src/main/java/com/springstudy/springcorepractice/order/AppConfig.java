@@ -2,6 +2,7 @@ package com.springstudy.springcorepractice.order;
 
 import com.springstudy.springcorepractice.discount.DiscountPolicy;
 import com.springstudy.springcorepractice.discount.FixDiscountPolicy;
+import com.springstudy.springcorepractice.discount.RateDiscountPolicy;
 import com.springstudy.springcorepractice.member.MemberService;
 import com.springstudy.springcorepractice.member.MemberServiceImpl;
 import com.springstudy.springcorepractice.member.MemoryMemberRepository;
@@ -33,9 +34,11 @@ public class AppConfig {
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 
+    // 기획이 바뀐다 해도 여기서만 코드를 변경해주면 된다.
+    // 로직을 사용하는 사용 영역에는 코드를 건드리지 않고
+    // 로직을 구성하는 구성 영역에서만 코드를 건드리면 되는 것
     public DiscountPolicy discountPolicy() {
-        return new FixDiscountPolicy();
+//        return new FixDiscountPolicy();
+        return new RateDiscountPolicy();
     }
-
-
 }
