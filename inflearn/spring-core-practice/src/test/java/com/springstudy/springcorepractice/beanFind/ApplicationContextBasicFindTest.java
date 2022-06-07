@@ -31,7 +31,7 @@ public class ApplicationContextBasicFindTest {
 
     @Test
     @DisplayName("구체 타입으로 조회")
-    // 웬만함녀 구체적으로 적는 것은 좋지 않다.
+    // 웬만하면 구체적으로 적는 것은 좋지 않다.
     // 이 코드는 구현에 의존했기에 좋은 코드는 아니지만, 그럼에도 필요할 때는 있다
     void findBeanByName2() {
         MemberService memberService = ac.getBean("memberService", MemberServiceImpl.class);
